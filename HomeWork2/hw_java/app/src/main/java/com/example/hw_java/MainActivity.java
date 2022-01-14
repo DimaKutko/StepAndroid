@@ -31,20 +31,26 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     protected String getTime() {
-        Calendar lessonDate = new GregorianCalendar(2022, 0, 14, 18, 0);
+        Calendar lessonDate = new GregorianCalendar(2022, Calendar.JANUARY, 14);
+
+        lessonDate.set(Calendar.HOUR, 18);
+        lessonDate.set(Calendar.MINUTE, 0);
         Calendar now = GregorianCalendar.getInstance();
 
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(lessonDate.getTimeInMillis() - now.getTimeInMillis());
+        long diff = lessonDate.getTimeInMillis() - now.getTimeInMillis();
 
-//        System.out.println(lessonDate.getTime());
+        long day = diff / (24 * 60 * 60 * 1000);
+        diff -= day * 24 * 60 * 60 * 1000;
 
-        int h = c.get(Calendar.HOUR_OF_DAY) - 1;
-        int d = c.get(Calendar.DAY_OF_MONTH) - 1;
-        int m = c.get(Calendar.MINUTE);
-        int s = c.get(Calendar.SECOND);
+        long hours = diff / (60 * 60 * 1000);
+        diff -= (hours * 60 * 60 * 1000);
 
-        return d + " дней " + String.format("%02d", h) + ":" + String.format("%02d", m) + ":" + String.format("%02d", s);
+        long minutes = diff / (60 * 1000);
+        diff -= minutes * 60 * 1000;
+
+        long seconds = diff / 1000;
+
+        return day + " дней " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
 
     public void onPressedBtn(View view) {
