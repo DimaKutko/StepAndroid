@@ -1,16 +1,11 @@
-# homework5
+# HomeWork5
 
-A new Flutter project.
+Приложение показывает в заголовке, сколько миллисекунд прошло после его запуска. Обратите внимание, что через 5 секунд в экшн-баре должно быть значение равное примерно 5000!
 
-## Getting Started
+Кнопка начинает плавно двигаться вправо.
 
-This project is a starting point for a Flutter application.
+Реализовать эффект бегущей строки в заголовке (как в новостях).
 
-A few resources to get you started if this is your first Flutter project:
+Цвет фона приложения плавно меняется от чёрного к красному, от красного к жёлтому, к зелёному, к голубому, к синему, к розовому, белому, чёрному и тд.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Пользователю даётся 20 секунд, чтобы совершить максимально возможное количество кликов по кнопке. По истечении времени показать тост, который сообщает набранное количество кликов, и максимальный рекорд по итогам всех попыток.
