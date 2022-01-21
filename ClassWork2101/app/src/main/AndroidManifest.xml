@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClassWork2101">
         <activity
+            android:name=".RelativeLayoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LinearLayoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
