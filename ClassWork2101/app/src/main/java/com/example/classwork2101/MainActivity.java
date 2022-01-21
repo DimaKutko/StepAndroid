@@ -2,13 +2,10 @@ package com.example.classwork2101;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
