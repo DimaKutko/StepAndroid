@@ -1,4 +1,4 @@
-# homework6
+# HomeWork6
 
 Task: 
 
