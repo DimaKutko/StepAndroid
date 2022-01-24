@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return AspectRatio(
       aspectRatio: 1,
       child: InkWell(
-        onTap: () => _onTapGridBtn(index),
+        onTap: isActive ? () => _onTapGridBtn(index) : null,
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
