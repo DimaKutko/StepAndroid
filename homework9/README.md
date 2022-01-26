@@ -1,16 +1,17 @@
-# homework9
+# HomeWork9
 
-A new Flutter project.
+Сделать GridView, в который загружается 30-40 картинок из интернета (базовый пример был на паре, либо
+https://gist.github.com/sunmeat/91a2edca0ecd1e2a95e63baede33c42f
 
-## Getting Started
+ИЛИ
 
-This project is a starting point for a Flutter application.
+написать игру Пятнашки
 
-A few resources to get you started if this is your first Flutter project:
+ИЛИ
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Реализовать приложение «Список желаний» (WishList)
+На экране появляется список предметов, которые вы хотели бы получить в подарок.
+Пункт списка выглядит как:
+картинка – название товара – цена в долларах – чекбокс
+Предметы хранятся в листе, количество элементов может меняться (все элементы создаются программно).
+Под списком есть текстовое поле, которое показывает общую стоимость всех подарков.
