@@ -22,4 +22,10 @@
         android:name="com.example.bottombar.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_dima"
+        android:name="com.example.bottombar.ui.home.HomeFragment"
+        android:label="Dima"
+        tools:layout="@layout/fragment_dima"  />
 </navigation>
