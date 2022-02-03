@@ -6,38 +6,38 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText login, pass;
+    SharedPreferences pref;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        login = findViewById(R.id.login);
+        pass = findViewById(R.id.pass);
     }
 
-    public void start(View v) {
-        if (isMyServiceRunning(MyService.class)) return;
-        Intent startIntent = new Intent(this, MyService.class);
-        startIntent.setAction("start");
-        startService(startIntent);
-    }
-
-    public void stop(View v) {
-        if (!isMyServiceRunning(MyService.class)) return;
-        Intent stopIntent = new Intent(this, MyService.class);
-        stopIntent.setAction("stop");
-        startService(stopIntent);
-    }
-
-    // проверка, запущен ли сервис
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
+    public void handler(View v) {
+        if (v.getId() == R.id.save) {
+            pref = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor ed = pref.edit();
+            ed.putString("login", login.getText().toString());
+            ed.putString("password", pass.getText().toString());
+            ed.apply();
         }
-        return false;
+        if (v.getId() == R.id.load) {
+            pref = getPreferences(MODE_PRIVATE);
+            login.setText(pref.getString("login", ""));
+            pass.setText(pref.getString("password", ""));
+        }
     }
 }

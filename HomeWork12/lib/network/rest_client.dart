@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:homework9/errors/api_error.dart';
-import 'package:homework9/network/rest_response.dart';
+import 'package:homework12/errors/api_error.dart';
+import 'package:homework12/network/rest_response.dart';
 import 'package:http/http.dart';
 
 abstract class RestClient {
@@ -76,7 +76,7 @@ class RestClientImpl extends RestClient {
     final response = await request();
     Map<String, String>? errors;
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      final map = <String, List>{'list': jsonDecode(response.body)};
+      final map = <String, dynamic>{'data': jsonDecode(response.body)};
 
       return RestResponse.fromJson(map);
     } else if (response.statusCode == 400) {

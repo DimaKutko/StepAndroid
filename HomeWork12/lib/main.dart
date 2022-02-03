@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:homework9/network/rest_client.dart';
+import 'package:homework12/models/wallpaper_halper.dart';
+import 'package:homework12/network/rest_client.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -31,106 +32,79 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  RestClient? _client;
-  double _value = 0;
-  List<dynamic> images = [];
-
-  int get _count => (_value * 30).toInt();
+  bool isLoading = false;
+  WallpaperHelper? hallper;
 
   @override
   void initState() {
     super.initState();
 
-    _client = RestClientImpl(client: http.Client());
+    hallper = WallpaperHelper(client: RestClientImpl(client: http.Client()));
   }
 
-  Future<void> getImages() async {
-    if (_count == 0) return;
-
-    try {
-      var endpoint = 'https://api.unsplash.com/photos/random';
-      endpoint += '?client_id=oim-16Ie_nspeGwp9jmuPjc27KtsR61z36hvRUA7mU4';
-      endpoint += '&count=$_count';
-
-      final result = await _client?.get(endpoint);
-
-      setState(() {
-        images = result?.list ?? [];
-      });
-    } catch (e) {
-      print(e);
-    }
+  Future<void> getImage() async {
+    setState(() => isLoading = true);
+    await hallper?.getRandomWallpaper();
+    setState(() => isLoading = false);
   }
 
-  void onChangedSlide(double value) {
-    setState(() {
-      _value = value;
-    });
-  }
-
-  Widget _buildSlider() {
-    return Slider(
-      value: _value,
-      onChanged: onChangedSlide,
-    );
+  Future<void> setupWallpaper() async {
+    setState(() => isLoading = true);
+    await hallper?.setupWallpaper();
+    setState(() => isLoading = false);
   }
 
   Widget _buildGenerateBtn() {
-    return ElevatedButton(
-      onPressed: getImages,
-      child: Text('Получить $_count рандомных фоток'),
-    );
-  }
-
-  Widget _buildImage(int index) {
-    final String url = images[index]['urls']['small'];
-
-    return AspectRatio(
-      aspectRatio: 1,
-      child: CachedNetworkImage(
-        imageUrl: url,
-        placeholder: (context, url) =>
-            const CircularProgressIndicator(color: Colors.black),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-        fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: getImage,
+        child: const Text('Рандомные обои'),
       ),
     );
   }
 
-  Widget _buildGrid() {
-    Widget grid() {
-      return GridView.count(
-        crossAxisCount: 3,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        padding: const EdgeInsets.all(8),
-        children: List.generate(
-          images.length,
-          (index) => _buildImage(index),
-        ),
-      );
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+  Widget _buildSetWallpaperBtn() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: setupWallpaper,
+        child: const Text('Установить эти обои'),
       ),
-      child: images.isNotEmpty ? grid() : null,
+    );
+  }
+
+  Widget _buildImage() {
+    final size = MediaQuery.of(context).size;
+
+    return CachedNetworkImage(
+      imageUrl: hallper!.imageUrl!,
+      placeholder: (context, url) =>
+          const Center(child: CircularProgressIndicator(color: Colors.black)),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
+      fit: BoxFit.cover,
+      height: size.height,
+      width: size.width,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home Work 9')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(title: const Text('Home Work 12')),
+      body: Stack(
         children: [
-          const SizedBox(height: 8),
-          _buildSlider(),
-          _buildGenerateBtn(),
-          const SizedBox(height: 16),
-          Expanded(child: _buildGrid()),
+          if (hallper?.imageUrl != null) _buildImage(),
+          Column(
+            children: [
+              const SizedBox(width: double.infinity),
+              _buildGenerateBtn(),
+              if (!isLoading && hallper?.imageUrl != null)
+                _buildSetWallpaperBtn(),
+            ],
+          ),
+          if (isLoading)
+            const Center(child: CircularProgressIndicator(color: Colors.black)),
         ],
       ),
     );
